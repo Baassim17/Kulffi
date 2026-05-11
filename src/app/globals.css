@@ -1,0 +1,307 @@
+﻿@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "lenis/dist/lenis.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+  --font-blenny: "Blenny", ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand Colors */
+  --color-espresso: #2A1810;
+  --color-cream: #FAF3EC;
+  --color-terracotta: #C4785C;
+  --color-terracotta-dark: #A0522D;
+  --color-sage: #7A8B6E;
+  --color-saffron: #D4A017;
+  --color-surface: #F5E6D3;
+  --color-muted-custom: #A89B91;
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --background: #2A1810;
+  --foreground: #FAF3EC;
+  --card: #2A1810;
+  --card-foreground: #FAF3EC;
+  --popover: #2A1810;
+  --popover-foreground: #FAF3EC;
+  --primary: #C4785C;
+  --primary-foreground: #FAF3EC;
+  --secondary: #3D2A1F;
+  --secondary-foreground: #FAF3EC;
+  --muted: #3D2A1F;
+  --muted-foreground: #A89B91;
+  --accent: #7A8B6E;
+  --accent-foreground: #FAF3EC;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: rgba(250, 243, 236, 0.1);
+  --input: rgba(250, 243, 236, 0.15);
+  --ring: #C4785C;
+  --chart-1: #C4785C;
+  --chart-2: #7A8B6E;
+  --chart-3: #D4A017;
+  --chart-4: #A89B91;
+  --chart-5: #3D2A1F;
+  --radius: 0.125rem;
+  --sidebar: #2A1810;
+  --sidebar-foreground: #FAF3EC;
+  --sidebar-primary: #C4785C;
+  --sidebar-primary-foreground: #FAF3EC;
+  --sidebar-accent: #3D2A1F;
+  --sidebar-accent-foreground: #FAF3EC;
+  --sidebar-border: rgba(250, 243, 236, 0.1);
+  --sidebar-ring: #C4785C;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply h-full font-sans;
+  }
+  body {
+    @apply m-0 min-h-full bg-[#F5E6D3] text-[#2A1810] antialiased;
+  }
+  ::selection {
+    background: rgba(196, 120, 92, 0.3);
+    color: #FAF3EC;
+  }
+}
+
+/* Custom Animations */
+@keyframes loading-indicator {
+  0% {
+    transform: scaleX(0);
+    transform-origin: top left;
+  }
+  50% {
+    transform-origin: top left;
+    transform: scaleX(1);
+  }
+  50.01% {
+    transform-origin: top right;
+    transform: scaleX(1);
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: top right;
+  }
+}
+
+@keyframes view-bottom {
+  0% {
+    transform: translate3d(0, 2rem, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes view-alpha {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes spin-reverse-slower {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes drift-small {
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(-25vw);
+  }
+}
+
+@keyframes drift-large {
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(-40vw);
+  }
+}
+
+@keyframes wiggle {
+  5%, 50% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(0.9);
+  }
+  15% {
+    transform: scale(1.15);
+  }
+  20% {
+    transform: scale(1.15) rotate(-5deg);
+  }
+  25% {
+    transform: scale(1.15) rotate(5deg);
+  }
+  30% {
+    transform: scale(1.15) rotate(-3deg);
+  }
+  35% {
+    transform: scale(1.15) rotate(2deg);
+  }
+  40% {
+    transform: scale(1.15) rotate(0);
+  }
+}
+
+@keyframes marquee-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounce-arrow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+/* Utility Classes */
+.animate-spin-slow {
+  animation: spin-slow 7s linear infinite;
+}
+
+.animate-spin-reverse-slower {
+  animation: spin-reverse-slower 21s linear infinite;
+}
+
+.animate-drift-small {
+  animation: drift-small 7s linear infinite;
+}
+
+.animate-drift-large {
+  animation: drift-large 7.25s linear infinite;
+}
+
+.animate-wiggle {
+  animation: wiggle 4s linear infinite;
+  animation-delay: 2s;
+}
+
+.animate-marquee-left {
+  animation: marquee-left 25s linear infinite;
+}
+
+.animate-marquee-right {
+  animation: marquee-right 30s linear infinite;
+}
+
+.animate-bounce-arrow {
+  animation: bounce-arrow 2s ease-in-out infinite;
+}
+
+/* Hide scrollbar for smooth scroll containers */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Story word highlight — replaces per-frame style.color writes with a CSS class toggle */
+.story-word {
+  color: rgba(253, 240, 222, 0.4);
+  transition: color 0.15s ease-out;
+}
+.story-word--active {
+  color: #FAF3EC;
+}

@@ -1,0 +1,3 @@
+﻿const a = "hello";
+const b = `world`;
+const c = ${x};
