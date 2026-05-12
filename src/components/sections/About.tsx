@@ -282,6 +282,7 @@ export default function About() {
                   src="/images/about.webp"
                   alt="Close up of chocolate ice cream against terracotta wall"
                   className="h-full w-full border-2 border-[#A31D1D] object-cover"
+                  loading="lazy"
                 />
                 {/* Fake polaroid tape */}
                 <div className="absolute -top-4 left-1/2 h-8 w-24 -translate-x-1/2 rotate-2 border-2 border-[#A31D1D] bg-[#FCE9D5]/80 shadow-sm backdrop-blur-sm" />

@@ -118,8 +118,9 @@ export function useChocoScene(): UseChocoSceneReturn {
       const keyLight = new THREE.DirectionalLight(0xfff8f0, 0.8);
       keyLight.position.set(4, 6, 4);
       keyLight.castShadow = true;
-      keyLight.shadow.mapSize.width = 1024;
-      keyLight.shadow.mapSize.height = 1024;
+      const shadowSize = isMobile ? 512 : 1024;
+      keyLight.shadow.mapSize.width = shadowSize;
+      keyLight.shadow.mapSize.height = shadowSize;
       keyLight.shadow.radius = 12;
       keyLight.shadow.camera.near = 1;
       keyLight.shadow.camera.far = 20;

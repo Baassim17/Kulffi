@@ -1,10 +1,19 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { useCart } from "@/hooks/useCart";
 import { X, ShoppingBag } from "lucide-react";
-import CheckoutFlow from "@/components/checkout/CheckoutFlow";
+
+const CheckoutFlow = dynamic(() => import("@/components/checkout/CheckoutFlow"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center h-full">
+      <div className="w-8 h-8 rounded-full border-[3px] border-[#A31D1D]/20 border-t-[#A31D1D] animate-spin" />
+    </div>
+  ),
+});
 
 export default function CartDrawer() {
   const { isOpen, setIsOpen, totalCount, resetCheckout } = useCart();

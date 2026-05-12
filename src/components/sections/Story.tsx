@@ -110,11 +110,17 @@ const scrollRef = useRef(0);
 
         words.forEach((wordEl, wordIndex) => {
           const opacity = getWordOpacity(sp, lineIndex, wordIndex, totalWords);
-          wordEl.style.opacity = String(Math.max(0, opacity));
-          if (opacity > 0.9) {
-            wordEl.classList.add("story-word--active");
-          } else {
-            wordEl.classList.remove("story-word--active");
+          const rounded = (opacity * 100 + 0.5 | 0) / 100; // round to 2 decimals
+          const prev = wordEl.dataset.op;
+          const next = String(rounded);
+          if (prev !== next) {
+            wordEl.style.opacity = next;
+            wordEl.dataset.op = next;
+            if (rounded > 0.9) {
+              wordEl.classList.add("story-word--active");
+            } else {
+              wordEl.classList.remove("story-word--active");
+            }
           }
         });
       });
@@ -148,7 +154,7 @@ const scrollRef = useRef(0);
           alt="Friends enjoying Kulffi"
           className="absolute left-0 w-full object-cover"
           style={{ height: "124%", top: "-12%" }}
-          loading="eager"
+          loading="lazy"
         />
         {/* Mild dark overlay for text readability */}
         <div

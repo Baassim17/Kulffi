@@ -17,6 +17,16 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        // Long-lived cache for static assets (images, fonts, 3D models, WASM)
+        source: "/:all*(.svg|.jpg|.jpeg|.png|.webp|.avif|.ico|.woff|.woff2|.ttf|.glb|.wasm)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
         source: "/:path*",
         headers: [
           {

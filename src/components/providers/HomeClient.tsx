@@ -5,19 +5,18 @@ import dynamic from "next/dynamic";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Preloader from "@/components/animations/Preloader";
 import SmoothScroll from "@/components/animations/SmoothScroll";
-import CustomCursor from "@/components/animations/CustomCursor";
 import GrainOverlay from "@/components/animations/GrainOverlay";
 import Header from "@/components/sections/Header";
 import Hero from "@/components/sections/Hero";
-import About from "@/components/sections/About";
-import Flavors from "@/components/sections/Flavors";
-import Story from "@/components/sections/Story";
-import PopsicleHero from "@/components/sections/PopsicleHero";
-import Contact from "@/components/sections/Contact";
 import CartDrawer from "@/components/shared/CartDrawer";
 import ErrorBoundary from "@/components/shared/ErrorBoundary";
 import { initScrollAnimations } from "@/lib/animations";
 
+const About = dynamic(() => import("@/components/sections/About"));
+const Flavors = dynamic(() => import("@/components/sections/Flavors"));
+const Story = dynamic(() => import("@/components/sections/Story"));
+const PopsicleHero = dynamic(() => import("@/components/sections/PopsicleHero"));
+const Contact = dynamic(() => import("@/components/sections/Contact"));
 const ChocoBar = dynamic(() => import("@/components/sections/ChocoBar"), {
   ssr: false,
   loading: () => (
@@ -61,7 +60,6 @@ export default function HomeClient() {
           transition: loaded ? "opacity 0.5s ease-out" : undefined,
         }}
       >
-        <CustomCursor />
         <GrainOverlay />
         <Header />
         <main>

@@ -16,6 +16,7 @@ const FLAVOR_NAMES = [
 ];
 
 const TOTAL_TASKS = CRITICAL_IMAGES.length + 1; // +1 for fonts
+const MARQUEE_TEXT = Array(20).fill("KULFFI TRUE ICE CREAM").join("\u00A0\u00A0\u00A0\u00A0");
 
 function playPopSound() {
   try {
@@ -50,8 +51,6 @@ function preloadImage(src: string): Promise<void> {
   });
 }
 
-/** Load remaining non-critical images in background after page is interactive.
- *  GLB models are NOT preloaded — they load on-demand when user clicks a flavor. */
 function loadBackgroundImages() {
   const bgImages = [
     "/images/about.webp",
@@ -81,11 +80,13 @@ function loadBackgroundImages() {
 
 export default function Preloader({ onComplete }: PreloaderProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<SVGCircleElement>(null);
-  const dotRef = useRef<HTMLDivElement>(null);
-  const percentRef = useRef<HTMLDivElement>(null);
-  const brandRef = useRef<HTMLDivElement>(null);
+  const row1Ref = useRef<HTMLDivElement>(null);
+  const row2Ref = useRef<HTMLDivElement>(null);
+  const row3Ref = useRef<HTMLDivElement>(null);
+  const percentTextRef = useRef<HTMLDivElement>(null);
   const statusRef = useRef<HTMLDivElement>(null);
+  const mqTlRef = useRef<gsap.core.Timeline | null>(null);
+  
   const tasksDoneRef = useRef(0);
   const displayPctRef = useRef(0);
   const rafRef = useRef(0);
@@ -104,46 +105,74 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       onCompleteRef.current?.();
       return;
     }
+    
+    // Freeze the infinite marquees immediately
+    if (mqTlRef.current) mqTlRef.current.pause();
+
     const exitTl = gsap.timeline({
       onComplete: () => {
         container.style.display = "none";
         onCompleteRef.current?.();
       },
     });
-    exitTl.to({}, { duration: 0.3 });
-    const elements = [ringRef.current, dotRef.current, brandRef.current, percentRef.current, statusRef.current].filter(Boolean);
-    exitTl.to(elements, {
-      scale: 1.08, autoAlpha: 0, duration: 0.6, stagger: 0.03, ease: "power2.inOut",
-    }, "-=0.1");
+    
+    // 1. Blast the UI percentage forward and fade out
+    exitTl.to([percentTextRef.current, statusRef.current], {
+      scale: 3,
+      autoAlpha: 0,
+      duration: 0.5,
+      ease: "power3.in"
+    }, 0);
+
+    // 2. Collapse the top and bottom rows into the center and fade them out to prevent messy text overlap
+    exitTl.to(row1Ref.current, { yPercent: 100, opacity: 0, duration: 0.5, ease: "power3.in" }, 0.2);
+    exitTl.to(row3Ref.current, { yPercent: -100, opacity: 0, duration: 0.5, ease: "power3.in" }, 0.2);
+
+    // 3. Only the center row remains; flash it to full opacity
+    exitTl.to(row2Ref.current, {
+      opacity: 1,
+      duration: 0.1
+    }, 0.6);
+
     exitTl.to(container, {
-      autoAlpha: 0, duration: 0.4, ease: "power2.out",
-    }, "-=0.2");
+      scale: 3,
+      autoAlpha: 0,
+      duration: 0.8,
+      ease: "power2.inOut",
+      transformOrigin: "center center"
+    }, 0.6);
+
   }, []);
 
-  // Entrance animation
+  // Entrance and Infinite Marquee Animation
   useEffect(() => {
-    const tl = gsap.timeline({ delay: 0.1 });
-    if (ringRef.current) {
-      gsap.set(ringRef.current, { strokeDashoffset: 565, autoAlpha: 0 });
-      tl.to(ringRef.current, { autoAlpha: 1, duration: 0.8, ease: "power2.out" });
-    }
-    if (dotRef.current) {
-      gsap.set(dotRef.current, { scale: 0, autoAlpha: 0 });
-      tl.to(dotRef.current, { scale: 1, autoAlpha: 1, duration: 0.5, ease: "back.out(2)" }, "-=0.4");
-    }
-    if (brandRef.current) {
-      gsap.set(brandRef.current, { y: 16, autoAlpha: 0 });
-      tl.to(brandRef.current, { y: 0, autoAlpha: 1, duration: 0.7, ease: "power3.out" }, "-=0.3");
-    }
-    if (percentRef.current) {
-      gsap.set(percentRef.current, { y: 8, autoAlpha: 0 });
-      tl.to(percentRef.current, { y: 0, autoAlpha: 1, duration: 0.6, ease: "power2.out" }, "-=0.4");
-    }
-    if (statusRef.current) {
-      gsap.set(statusRef.current, { y: 6, autoAlpha: 0 });
-      tl.to(statusRef.current, { y: 0, autoAlpha: 1, duration: 0.5, ease: "power2.out" }, "-=0.3");
-    }
-    return () => { tl.kill(); };
+    // 1. Entrance Fade
+    gsap.fromTo(containerRef.current, 
+      { autoAlpha: 0 }, 
+      { autoAlpha: 1, duration: 0.5, ease: "power2.out" }
+    );
+    
+    gsap.fromTo([percentTextRef.current, statusRef.current],
+      { scale: 0.8, autoAlpha: 0 },
+      { scale: 1, autoAlpha: 1, duration: 1, ease: "power3.out", stagger: 0.1 }
+    );
+
+    // 2. Infinite Kinetic Marquee setup
+    const mqTl = gsap.timeline({ repeat: -1 });
+    
+    // row1 and row3 move left
+    gsap.set([row1Ref.current, row3Ref.current], { xPercent: 0 });
+    // row2 moves right (so we start it offset and move to 0)
+    gsap.set(row2Ref.current, { xPercent: -30 });
+
+    mqTl.to([row1Ref.current, row3Ref.current], { xPercent: -30, duration: 15, ease: "none" }, 0);
+    mqTl.to(row2Ref.current, { xPercent: 0, duration: 15, ease: "none" }, 0);
+    
+    mqTlRef.current = mqTl;
+
+    return () => { 
+      mqTl.kill(); 
+    };
   }, []);
 
   // Resource loading
@@ -156,7 +185,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       const targetVal = Math.round(rawPct);
       const startVal = displayPctRef.current;
       const startTime = performance.now();
-      const duration = 300;
+      const duration = 500; 
 
       function tick() {
         const elapsed = performance.now() - startTime;
@@ -165,24 +194,17 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         displayPctRef.current = Math.round(startVal + (targetVal - startVal) * eased);
         const pct = displayPctRef.current;
 
-        const ring = ringRef.current;
-        const dot = dotRef.current;
-        const percent = percentRef.current;
+        const percent = percentTextRef.current;
         const status = statusRef.current;
 
-        if (percent) percent.textContent = `${pct}%`;
-        if (ring) {
-          const circumference = 2 * Math.PI * 90;
-          ring.style.strokeDashoffset = String(circumference * (1 - pct / 100));
+        if (percent) {
+          percent.textContent = `${pct}`;
         }
-        if (dot) {
-          const angle = (pct / 100) * Math.PI * 2 - Math.PI / 2;
-          const r = 90;
-          dot.style.transform = `translate(${Math.cos(angle) * r}px, ${Math.sin(angle) * r}px)`;
-        }
+
         if (status) {
           const fi = Math.floor((pct / 100) * FLAVOR_NAMES.length);
-          status.textContent = `Preparing ${FLAVOR_NAMES[Math.min(fi, FLAVOR_NAMES.length - 1)]}...`;
+          const currentFlavor = FLAVOR_NAMES[Math.min(fi, FLAVOR_NAMES.length - 1)].toUpperCase();
+          status.textContent = `LOADING ${currentFlavor}...`;
         }
 
         if (t < 1) {
@@ -199,12 +221,16 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     function checkComplete() {
       if (isCompleteRef.current) return;
       const elapsed = performance.now() - startTimeRef.current;
-      const minTime = 500;
+      const minTime = 1500; // Let the marquees spin a bit
       const remaining = Math.max(0, minTime - elapsed);
 
       setTimeout(() => {
         if (isCompleteRef.current) return;
         isCompleteRef.current = true;
+        
+        displayPctRef.current = 100;
+        if (percentTextRef.current) percentTextRef.current.textContent = `100`;
+        
         triggerExit();
         loadBackgroundImages();
       }, remaining);
@@ -226,7 +252,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         tasksDoneRef.current = TOTAL_TASKS;
         checkComplete();
       }
-    }, 2000);
+    }, 2500);
 
     return () => {
       clearTimeout(safetyTimer);
@@ -235,39 +261,51 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   }, [triggerExit]);
 
   return (
-    <div
-      ref={containerRef}
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#F5E6D3]"
-    >
-      <div className="relative flex flex-col items-center">
-        <div className="relative w-[200px] h-[200px] md:w-[240px] md:h-[240px]">
-          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 200">
-            <circle cx="100" cy="100" r="90" fill="none" stroke="#A31D1D" strokeWidth="2" strokeOpacity="0.12" />
-            <circle
-              ref={ringRef}
-              cx="100" cy="100" r="90" fill="none" stroke="#A31D1D" strokeWidth="2.5" strokeLinecap="round"
-              strokeDasharray={2 * Math.PI * 90} strokeDashoffset={2 * Math.PI * 90}
-              style={{ transform: "rotate(-90deg)", transformOrigin: "center", opacity: 0 }}
-            />
-          </svg>
-          <div
-            ref={dotRef}
-            className="absolute top-1/2 left-1/2 w-3.5 h-3.5 md:w-4 md:h-4 rounded-full bg-[#FCE9D5] border-[2.5px] border-[#A31D1D]"
-            style={{ marginLeft: -7, marginTop: -7, transform: "translate(0px, -90px)", opacity: 0 }}
-          />
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-1">
-            <div ref={brandRef} className="font-blenny text-[clamp(1.6rem,4.5vw,2.6rem)] text-[#A31D1D] leading-none tracking-tight" style={{ opacity: 0 }}>
-              KULFFI
-            </div>
-            <div ref={percentRef} className="font-display text-[11px] md:text-xs font-bold tracking-[0.2em] text-[#A31D1D]/50 tabular-nums" style={{ opacity: 0 }}>
-              0%
-            </div>
-          </div>
+    <div ref={containerRef} className="fixed inset-0 z-[9999] pointer-events-none bg-[#A31D1D] overflow-hidden flex flex-col justify-center" style={{ opacity: 0 }}>
+      
+      {/* 
+        Kinetic Marquee Container
+        Tilted slightly, scaled up to ensure edges don't show during rotation 
+      */}
+      <div className="absolute inset-0 flex flex-col justify-center gap-0 md:gap-2 -rotate-6 scale-[1.2]">
+        <div 
+          ref={row1Ref} 
+          className="whitespace-nowrap font-blenny text-[#F5E6D3] opacity-15 text-[clamp(6rem,18vw,12rem)] leading-[0.8] tracking-tighter will-change-transform"
+        >
+          {MARQUEE_TEXT}
         </div>
-        <div ref={statusRef} className="mt-6 text-[10px] md:text-[11px] font-bold uppercase tracking-[0.4em] text-[#A31D1D]/35 h-4" style={{ opacity: 0 }}>
-          Preparing flavors...
+        <div 
+          ref={row2Ref} 
+          className="whitespace-nowrap font-blenny text-[#F5E6D3] opacity-15 text-[clamp(6rem,18vw,12rem)] leading-[0.8] tracking-tighter will-change-transform"
+        >
+          {MARQUEE_TEXT}
+        </div>
+        <div 
+          ref={row3Ref} 
+          className="whitespace-nowrap font-blenny text-[#F5E6D3] opacity-15 text-[clamp(6rem,18vw,12rem)] leading-[0.8] tracking-tighter will-change-transform"
+        >
+          {MARQUEE_TEXT}
         </div>
       </div>
+
+      {/* Central UI */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-[#F5E6D3] z-10">
+        <div 
+          ref={percentTextRef} 
+          className="font-display font-black text-[clamp(8rem,25vw,18rem)] tracking-tighter leading-none tabular-nums drop-shadow-2xl will-change-transform"
+          style={{ opacity: 0 }}
+        >
+          0
+        </div>
+        <div 
+          ref={statusRef} 
+          className="font-bold text-[10px] md:text-[14px] tracking-[0.5em] uppercase mt-2 will-change-transform drop-shadow-md"
+          style={{ opacity: 0 }}
+        >
+          INITIALIZING...
+        </div>
+      </div>
+
     </div>
   );
 }

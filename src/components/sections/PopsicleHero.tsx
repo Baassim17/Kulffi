@@ -173,6 +173,7 @@ export default function PopsicleHero({
               alt="Woman enjoying chocolate ice cream"
               className="absolute inset-0 h-full w-full object-cover will-change-transform"
               style={{ transform: "scale(1)" }}
+              loading="lazy"
             />
             <div
               ref={overlayRef}

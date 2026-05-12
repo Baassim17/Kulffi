@@ -1,10 +1,6 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
 export const EASE_PRESETS = {
   easeOutSine: "power2.out",
   easeInOutSine: "power2.inOut",

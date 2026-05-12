@@ -85,12 +85,7 @@ function CartStep({ onNext }: { onNext: () => void }) {
           <Package className="h-8 w-8 text-[#A31D1D]/30" strokeWidth={1.5} />
         </div>
         <p className="text-[#A31D1D]/60 font-medium text-sm">Your cart is empty.</p>
-        <button
-          onClick={() => setIsOpen(false)}
-          className="mt-2 px-6 py-2.5 bg-[#A31D1D] text-[#FCE9D5] font-display font-bold text-xs uppercase tracking-widest rounded-full shadow-[3px_3px_0_#2A1810] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[5px_5px_0_#2A1810]"
-        >
-          Explore Flavors
-        </button>
+
       </div>
     );
   }

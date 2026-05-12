@@ -122,6 +122,7 @@ export default function ImageReveal() {
             alt="Woman enjoying chocolate ice cream"
             className="h-full w-full object-cover will-change-transform"
             style={{ transform: "scale(1)" }}
+            loading="lazy"
           />
           <div
             ref={overlayRef}

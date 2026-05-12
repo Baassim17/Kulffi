@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useCart } from "@/hooks/useCart";
 import { Minus, Plus, ShoppingCart } from "lucide-react";
+import Image from "next/image";
 
 const featuredFlavors = [
   {
@@ -91,11 +92,12 @@ function FlavorCard({ flavor }: { flavor: (typeof featuredFlavors)[0] }) {
     <div className="group relative flex flex-col h-full bg-[#FCE9D5] border-4 border-[#A31D1D] shadow-[8px_8px_0_#A31D1D] rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[12px_12px_0_#A31D1D] hover:-rotate-1">
       {/* Image Section */}
       <div className="relative aspect-square overflow-hidden border-b-4 border-[#A31D1D]">
-        <img
+        <Image
           src={flavor.image}
           alt={flavor.name}
-          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-          loading="lazy"
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
         />
         {/* Weight Badge */}
         <div className="absolute top-4 left-4 bg-[#A31D1D] text-[#FCE9D5] px-3 py-1 font-display font-bold text-sm tracking-wider border-2 border-[#A31D1D] shadow-[2px_2px_0_#2A1810] rotate-3">

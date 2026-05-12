@@ -1,4 +1,4 @@
-﻿import type { Metadata, Viewport } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Inter, Playfair_Display } from "next/font/google";
 import localFont from "next/font/local";
 import ClientProviders from "@/components/providers/ClientProviders";
@@ -26,7 +26,7 @@ const playfair = Playfair_Display({
 });
 
 const blenny = localFont({
-  src: "../../public/TrialStaticFonts/Blenny_Trial_Blk.ttf",
+  src: "../../public/TrialStaticFonts/Blenny_Trial_Blk.woff2",
   variable: "--font-blenny",
   weight: "900",
   display: "swap",
@@ -114,7 +114,6 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preload" as="image" href="/images/hero.webp" type="image/webp" fetchPriority="high" />
-        <link rel="preload" as="fetch" href="/draco/draco_decoder.wasm" crossOrigin="anonymous" />
       </head>
       <body className="min-h-full bg-[#F5E6D3] text-[#2A1810]">
         <ClientProviders>
