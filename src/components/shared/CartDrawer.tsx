@@ -32,10 +32,12 @@ export default function CartDrawer() {
     } else {
       document.body.style.overflow = "";
     }
+    const overlay = overlayRef.current;
+    const drawer = drawerRef.current;
     return () => {
       document.body.style.overflow = "";
-      gsap.killTweensOf(overlayRef.current);
-      gsap.killTweensOf(drawerRef.current);
+      if (overlay) gsap.killTweensOf(overlay);
+      if (drawer) gsap.killTweensOf(drawer);
     };
   }, [isOpen]);
 

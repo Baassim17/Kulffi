@@ -83,7 +83,7 @@ export default function About() {
     }
 
     // Floating decorations — use fromTo for smooth start
-    let floatingTweens: gsap.core.Tween[] = [];
+    const floatingTweens: gsap.core.Tween[] = [];
     if (decorRef.current) {
       const items = decorRef.current.querySelectorAll(".float-item");
       items.forEach((item, i) => {

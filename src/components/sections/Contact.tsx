@@ -126,7 +126,7 @@ export default function Contact({ layered = false }: ContactProps) {
       <div
         className={`px-6 md:px-12 max-w-[1400px] mx-auto flex flex-col ${
           layered
-            ? "min-h-full h-full pt-20 md:pt-24 lg:pt-28 pb-8 md:pb-10 justify-center"
+            ? "min-h-full h-full pt-20 md:pt-24 lg:pt-28 pb-8 md:pb-10 justify-start md:justify-center overflow-y-auto overflow-x-hidden"
             : "py-24 md:py-32"
         }`}
       >

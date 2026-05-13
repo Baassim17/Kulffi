@@ -188,11 +188,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   // Refs for stable completeCheckout callback (avoids context invalidation on every keystroke)
   const itemsRef = useRef(items);
-  itemsRef.current = items;
   const shippingInfoRef = useRef(shippingInfo);
-  shippingInfoRef.current = shippingInfo;
   const paymentInfoRef = useRef(paymentInfo);
-  paymentInfoRef.current = paymentInfo;
+
+  useEffect(() => {
+    itemsRef.current = items;
+    shippingInfoRef.current = shippingInfo;
+    paymentInfoRef.current = paymentInfo;
+  }, [items, shippingInfo, paymentInfo]);
 
   /* eslint-disable react-hooks/set-state-in-effect */
   // Hydrate from localStorage on mount only

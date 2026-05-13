@@ -217,10 +217,10 @@ export default function ChocoBar() {
             <div
               key={`${activeFlavorIndex}-${index}`}
               ref={(el) => { containerRefs.current[index] = el; }}
-              className={`pointer-events-none absolute top-0 h-full flex items-center ${
+              className={`pointer-events-none absolute top-0 h-full flex items-start pt-[12vh] sm:pt-[15vh] md:pt-0 md:items-center w-full md:w-auto px-4 md:px-0 justify-center md:justify-start ${
                 block.side === "left"
-                  ? "left-0 pl-8 md:pl-16 lg:pl-24"
-                  : "right-0 pr-8 md:pr-16 lg:pr-24"
+                  ? "left-0 md:pl-16 lg:pl-24"
+                  : "right-0 md:pr-16 lg:pr-24"
               }`}
               style={{ opacity: 0, willChange: "transform, opacity" }}
             >

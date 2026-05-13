@@ -146,7 +146,7 @@ export default function PopsicleHero({
     <section
       id="popsicle-hero"
       ref={sectionRef}
-      className="relative bg-[#A31D1D] h-[200vh] min-[900px]:h-[220vh]"
+      className="relative bg-[#A31D1D] h-[220vh]"
     >
       <div
         ref={innerRef}

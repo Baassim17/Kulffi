@@ -26,9 +26,9 @@ function MarqueeRow({
   const renderStrip = () => (
     <>
       {segments.map((seg, i) => (
-        <span key={i} className="inline-flex items-center">
+        <span key={i} className="inline-flex items-center shrink-0">
           <span
-            className={`font-display text-[clamp(3rem,10vw,7.5rem)] font-bold uppercase tracking-tight select-none ${
+            className={`font-display text-[clamp(3rem,10vw,7.5rem)] font-bold uppercase tracking-tight select-none shrink-0 ${
               seg.filled ? "" : "text-transparent"
             }`}
             style={
@@ -41,7 +41,7 @@ function MarqueeRow({
           </span>
           {/* Mixed filled + outlined circle separator */}
           <span
-            className="inline-block rounded-full mx-3 md:mx-5 align-middle"
+            className="inline-block rounded-full mx-3 md:mx-5 align-middle shrink-0"
             style={{
               width: "clamp(10px, 1.6vw, 16px)",
               height: "clamp(10px, 1.6vw, 16px)",

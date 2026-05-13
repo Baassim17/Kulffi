@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "lenis/dist/lenis.css";
@@ -12,6 +12,7 @@
   --font-mono: ui-monospace, monospace;
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+  --font-script: "Great Vibes", cursive;
   --font-blenny: "Blenny", ui-sans-serif, system-ui, sans-serif;
 
   /* Brand Colors */

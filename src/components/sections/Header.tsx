@@ -74,26 +74,26 @@ export default function Header() {
   return (
     <>
       <header
-        className="fixed top-0 left-0 right-0 z-50 flex items-start justify-between px-6 py-6 md:px-12 bg-transparent pointer-events-none"
+        className="fixed top-0 left-0 right-0 z-50 flex items-start justify-between px-4 py-4 md:px-12 md:py-6 bg-transparent pointer-events-none"
       >
         {/* Logo: Kulffi */}
         <a
           href="#"
-          className="pointer-events-auto flex flex-col items-start leading-[0.8] tracking-tighter mt-2"
+          className="pointer-events-auto flex flex-col items-start leading-[0.8] tracking-tighter mt-1 md:mt-2"
           onClick={(e) => {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
         >
-          <span className="font-blenny text-4xl md:text-5xl text-[#A31D1D] drop-shadow-[2px_2px_0_#FCE9D5] md:drop-shadow-[3px_3px_0_#FCE9D5]">
+          <span className="font-blenny text-[2rem] md:text-5xl text-[#A31D1D] drop-shadow-[2px_2px_0_#FCE9D5] md:drop-shadow-[3px_3px_0_#FCE9D5]">
             KULFFI
           </span>
         </a>
 
         {/* Cartoonish Navigation Buttons */}
-        <div className="flex items-start gap-4 pointer-events-auto">
+        <div className="flex items-start gap-2 md:gap-4 pointer-events-auto">
           
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
             {/* Orders Button */}
             <Link
               href="/orders"
@@ -108,12 +108,12 @@ export default function Header() {
             {/* Cart Button — Desktop & Mobile */}
             <button 
               onClick={() => setIsOpen(true)}
-              className="group flex items-center gap-3 px-5 py-2.5 bg-[#FCE9D5] border-2 border-[#A31D1D] rounded-full text-[#A31D1D] font-display font-bold text-[13px] uppercase tracking-[0.15em] shadow-[4px_4px_0_#A31D1D] transition-all duration-300 hover:bg-[#A31D1D] hover:text-[#FCE9D5] hover:-translate-y-1 hover:shadow-[6px_6px_0_#2A1810] active:translate-y-[2px] active:shadow-[2px_2px_0_#2A1810]"
+              className="group flex items-center gap-2 md:gap-3 px-3 py-2 md:px-5 md:py-2.5 bg-[#FCE9D5] border-2 border-[#A31D1D] rounded-full text-[#A31D1D] font-display font-bold text-[11px] md:text-[13px] uppercase tracking-[0.15em] shadow-[3px_3px_0_#A31D1D] md:shadow-[4px_4px_0_#A31D1D] transition-all duration-300 hover:bg-[#A31D1D] hover:text-[#FCE9D5] hover:-translate-y-1 hover:shadow-[5px_5px_0_#2A1810] md:hover:shadow-[6px_6px_0_#2A1810] active:translate-y-[2px] active:shadow-[1px_1px_0_#2A1810] md:active:shadow-[2px_2px_0_#2A1810]"
             >
               <div className="flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                <ShoppingBag className="h-[15px] w-[15px]" strokeWidth={2} />
+                <ShoppingBag className="h-[13px] w-[13px] md:h-[15px] md:w-[15px]" strokeWidth={2} />
               </div>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#A31D1D] group-hover:bg-[#FCE9D5] transition-colors duration-300" />
+              <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-[#A31D1D] group-hover:bg-[#FCE9D5] transition-colors duration-300" />
               <div className="flex items-center justify-center transition-transform duration-300 group-hover:scale-110 min-w-[1ch]">
                 {totalCount}
               </div>
@@ -123,11 +123,11 @@ export default function Header() {
 
           {/* Menu Button (Desktop & Mobile) */}
           <button 
-            className="group flex items-center gap-4 px-6 py-2.5 bg-[#FCE9D5] border-2 border-[#A31D1D] rounded-full text-[#A31D1D] font-display font-bold text-[13px] uppercase tracking-[0.15em] shadow-[4px_4px_0_#A31D1D] transition-all duration-300 hover:bg-[#A31D1D] hover:text-[#FCE9D5] hover:-translate-y-1 hover:shadow-[6px_6px_0_#2A1810] active:translate-y-[2px] active:shadow-[2px_2px_0_#2A1810]"
+            className="group flex items-center gap-2 md:gap-4 px-4 py-2 md:px-6 md:py-2.5 bg-[#FCE9D5] border-2 border-[#A31D1D] rounded-full text-[#A31D1D] font-display font-bold text-[11px] md:text-[13px] uppercase tracking-[0.15em] shadow-[3px_3px_0_#A31D1D] md:shadow-[4px_4px_0_#A31D1D] transition-all duration-300 hover:bg-[#A31D1D] hover:text-[#FCE9D5] hover:-translate-y-1 hover:shadow-[5px_5px_0_#2A1810] md:hover:shadow-[6px_6px_0_#2A1810] active:translate-y-[2px] active:shadow-[1px_1px_0_#2A1810] md:active:shadow-[2px_2px_0_#2A1810]"
             onClick={() => setMenuOpen(!menuOpen)}
           >
             <span className="inline-block transition-transform duration-300 group-hover:-translate-x-1">Menu</span>
-            <div className="relative flex flex-col justify-between w-[22px] h-[12px]">
+            <div className="relative flex flex-col justify-between w-[18px] md:w-[22px] h-[10px] md:h-[12px]">
               <span className="absolute top-0 left-0 h-[2px] w-full bg-[#A31D1D] transition-all duration-300 group-hover:bg-[#FCE9D5] group-hover:top-1/2 group-hover:-translate-y-1/2" />
               <span className="absolute top-1/2 -translate-y-1/2 left-0 h-[2px] w-full bg-[#A31D1D] transition-all duration-300 group-hover:bg-[#FCE9D5]" />
               <span className="absolute bottom-0 left-0 h-[2px] w-full bg-[#A31D1D] transition-all duration-300 group-hover:bg-[#FCE9D5] group-hover:bottom-1/2 group-hover:translate-y-1/2" />

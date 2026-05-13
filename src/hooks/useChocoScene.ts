@@ -317,7 +317,8 @@ export function useChocoScene(): UseChocoSceneReturn {
       if (dracoLoader) dracoLoader.dispose();
       if (currentModelRef.current && scene) scene.remove(currentModelRef.current);
       if (nextModelRef.current && scene) scene.remove(nextModelRef.current);
-      parsedCacheRef.current.forEach(({ group }) => {
+      const parsedCache = parsedCacheRef.current;
+      parsedCache.forEach(({ group }) => {
         group.traverse((child) => {
           if (child instanceof THREE.Mesh) {
             child.geometry?.dispose();
@@ -329,7 +330,7 @@ export function useChocoScene(): UseChocoSceneReturn {
           }
         });
       });
-      parsedCacheRef.current.clear();
+      parsedCache.clear();
       if (particles) disposeParticles(particles);
       if (scene && camera && renderer) disposeScene({ scene, camera, renderer });
     };

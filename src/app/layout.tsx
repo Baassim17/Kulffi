@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk, Inter, Playfair_Display } from "next/font/google";
+import { Space_Grotesk, Inter, Playfair_Display, Great_Vibes } from "next/font/google";
 import localFont from "next/font/local";
 import ClientProviders from "@/components/providers/ClientProviders";
 import "./globals.css";
@@ -22,6 +22,13 @@ const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-serif",
   weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const greatVibes = Great_Vibes({
+  subsets: ["latin"],
+  variable: "--font-script",
+  weight: ["400"],
   display: "swap",
 });
 
@@ -108,7 +115,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable} ${playfair.variable} ${blenny.variable}`}>
+    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable} ${playfair.variable} ${greatVibes.variable} ${blenny.variable}`}>
       <head>
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
