@@ -2,7 +2,7 @@ from PIL import Image
 import os
 import glob
 
-images_dir = r"C:\Users\mbaas\OneDrive\Documents\Antigravity Proj\ai-website-cloner-template-master\public\images"
+images_dir = os.path.join(os.path.dirname(__file__), "../public/images")
 
 png_files = glob.glob(os.path.join(images_dir, "*.png"))
 jpeg_files = glob.glob(os.path.join(images_dir, "*.jpg")) + glob.glob(os.path.join(images_dir, "*.jpeg"))

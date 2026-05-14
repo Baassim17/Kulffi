@@ -169,7 +169,7 @@ export default function PopsicleHero({
           >
             <img
               ref={imgRef}
-              src="/images/ChatGPT Image May 3, 2026, 10_01_49 PM.webp"
+              src="/images/popsicle-hero.webp"
               alt="Woman enjoying chocolate ice cream"
               className="absolute inset-0 h-full w-full object-cover will-change-transform"
               style={{ transform: "scale(1)" }}

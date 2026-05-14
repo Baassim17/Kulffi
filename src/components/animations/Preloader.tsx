@@ -146,12 +146,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
 
   // Entrance and Infinite Marquee Animation
   useEffect(() => {
-    // 1. Entrance Fade
-    gsap.fromTo(containerRef.current, 
-      { autoAlpha: 0 }, 
-      { autoAlpha: 1, duration: 0.5, ease: "power2.out" }
-    );
-    
+    // Entrance fade removed to make preloader visible instantly
     gsap.fromTo([percentTextRef.current, statusRef.current],
       { scale: 0.8, autoAlpha: 0 },
       { scale: 1, autoAlpha: 1, duration: 1, ease: "power3.out", stagger: 0.1 }
@@ -261,7 +256,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   }, [triggerExit]);
 
   return (
-    <div ref={containerRef} className="fixed inset-0 z-[9999] pointer-events-none bg-[#A31D1D] overflow-hidden flex flex-col justify-center" style={{ opacity: 0 }}>
+    <div ref={containerRef} className="fixed inset-0 z-[9999] pointer-events-none bg-[#A31D1D] overflow-hidden flex flex-col justify-center">
       
       {/* 
         Kinetic Marquee Container

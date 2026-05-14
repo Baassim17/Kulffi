@@ -35,18 +35,18 @@ export default function Hero({ loaded = false }: HeroProps) {
     }
 
     if (content) {
-      const elements = content.children;
-      gsap.set(elements, { autoAlpha: 0, y: 60 });
+      const elements = gsap.utils.toArray(content.children);
+      gsap.set(elements, { autoAlpha: 0, y: 30 });
       introTl.to(
         elements,
         {
           autoAlpha: 1,
           y: 0,
-          duration: 1.2,
-          stagger: 0.15,
+          duration: 0.6,
+          stagger: 0.08,
           ease: "power3.out",
         },
-        0.3
+        0.1
       );
     }
 
@@ -85,25 +85,25 @@ export default function Hero({ loaded = false }: HeroProps) {
           pinSpacing: true,
           scrub: 0.6,
           invalidateOnRefresh: true,
+          anticipatePin: 1,
         },
       });
       if (scrollTl.scrollTrigger) triggers.push(scrollTl.scrollTrigger);
 
-      scrollTl.fromTo(img, { scale: 1 }, { scale: 1.25, ease: "none" }, 0);
-      scrollTl.fromTo(
+      scrollTl.to(img, { scale: 1.25, ease: "none" }, 0);
+      scrollTl.to(
         imageWrap,
-        { clipPath: "inset(0% 0% 0% 0% round 0px)" },
         { clipPath: "inset(12% 27.5% 12% 27.5% round 24px)", ease: "none" },
         0
       );
       if (overlay) {
-        scrollTl.fromTo(overlay, { opacity: 0.45 }, { opacity: 0, ease: "none" }, 0);
+        scrollTl.to(overlay, { opacity: 0, ease: "none" }, 0);
       }
 
       // Fade out text content with upward slide
       const content = contentRef.current;
       if (content) {
-        scrollTl.fromTo(content.children, { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: -100, stagger: 0.05, ease: "power2.inOut" }, 0);
+        scrollTl.to(content.children, { autoAlpha: 0, y: -100, stagger: 0.05, ease: "power2.inOut" }, 0);
       }
 
       // Fade out badge quickly
@@ -131,25 +131,25 @@ export default function Hero({ loaded = false }: HeroProps) {
           pinSpacing: true,
           scrub: 0.55,
           invalidateOnRefresh: true,
+          anticipatePin: 1,
         },
       });
       if (mobileTl.scrollTrigger) triggers.push(mobileTl.scrollTrigger);
 
-      mobileTl.fromTo(img, { scale: 1 }, { scale: 1.1, ease: "none" }, 0);
-      mobileTl.fromTo(
+      mobileTl.to(img, { scale: 1.1, ease: "none" }, 0);
+      mobileTl.to(
         imageWrap,
-        { clipPath: "inset(0% 0% 0% 0% round 0px)" },
         { clipPath: "inset(10% 8% 18% 8% round 22px)", ease: "none" },
         0
       );
       if (overlay) {
-        mobileTl.fromTo(overlay, { opacity: 0.45 }, { opacity: 0.08, ease: "none" }, 0);
+        mobileTl.to(overlay, { opacity: 0.08, ease: "none" }, 0);
       }
 
       // Fade out text content with upward slide
       const contentMob = contentRef.current;
       if (contentMob) {
-        mobileTl.fromTo(contentMob.children, { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: -80, stagger: 0.05, ease: "power2.inOut" }, 0);
+        mobileTl.to(contentMob.children, { autoAlpha: 0, y: -80, stagger: 0.05, ease: "power2.inOut" }, 0);
       }
 
       // Fade out badge quickly
